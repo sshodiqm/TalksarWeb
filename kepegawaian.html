@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Talksar Web</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <img src="img/logotalksar.svg" width="150" alt="">
+        </a>
+        <button class="btn btn-danger font-weight-bold" type="button" id="logoutButton">Logout</button>
+    </nav>
+    <br><br>
+    <div class="container w-100">
+        <h3>Sistem Kepegawaian (Pegawai)</h3>
+        <div class="orange-circle"><span id="kritikCount"></span></div>
+        <br>
+        <table class="table">
+            <thead>
+                <th>No</th>
+                <th>Gambar</th>
+                <th>Judul</th>
+                <th>Deskripsi</th>
+                <th>Respon</th>
+            </thead>
+            <tbody id="tbody1"></tbody>
+        </table>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+
+    <script id="MainScript">
+        // Kode dipindahkan ke script.js
+        function GetAllDataRealtime() {
+            db.collection("kritik").where("kategori", "==", "Pegawai").onSnapshot((querySnapshot)=>{
+                DataBos = {};
+                let x = 0;
+                querySnapshot.forEach(doc =>  {
+                    let id = querySnapshot.docs[x].id;
+                    DataBos[id] = doc.data();
+                    x++;
+                });
+                renderToView(DataBos);
+            });
+        }
+
+        function countUnansweredCritiques(DocsList) {
+            let count = 0;
+            let keys = Object.keys(DocsList);
+            keys.forEach(key => {
+                let elemet = DocsList[key];
+                if (elemet.kategori === 'Pegawai' && (!elemet.respon || elemet.respon.trim() === '')) {
+                    count++;
+                }
+            });
+            return count;
+        }
+    </script>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            firebase.auth().signOut().then(function() {
+                // signOut sukses, pindah ke login
+                window.location.href = "login.html";
+            }).catch(function(error) {
+                // kalau terjadi error
+                console.log(error);
+            });
+        });
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (!user) {
+                window.location.href = "login.html";
+            }
+        });
+    </script>
+</body>
+</html>

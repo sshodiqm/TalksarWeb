@@ -1,0 +1,57 @@
+submitButton.onclick = function () {
+                // Proses pengiriman respon ke database Firebase
+                var respon = input.value;
+                // cara 1
+                // var kritikRef = firebase.firestore().collection('kritik').doc();
+                // kritikRef.set({
+                //     gambar: gambar,
+                //     judul: judul,
+                //     deskripsi: deskripsi,
+                //     respon: respon // Tambahkan field
+                // })
+                // .then(function () {
+                //     console.log("Respon berhasil ditambahkan ke database");
+                // })
+                // .catch(function (error) {
+                //     console.error("Error saat menambahkan respon ke database: ", error);
+                // })
+
+                // cara 2
+                // var kritikRef = firebase.firestore().collection('kritik').doc(doc.id);
+                // kritikRef.set({
+                //     respon: respon
+                // }, {merge: true})
+                // .then(function () {
+                //     console.log("Respon berhasil ditambahkan ke database");
+                // })
+                // .catch(function (error) {
+                //     console.error("Error saat menambahkan respon ke database: ", error);
+                // })
+
+                // cara 3
+                // var kritikRef = firebase.firestore().collection('kritik').doc();
+                // kritikRef.update({
+                //     respon: respon
+                // })
+                // .then(function () {
+                //     alert("Respon berhasil ditambahkan ke database");
+                // })
+                // .catch(function (error) {
+                //     alert("Error saat menambahkan respon ke database: ", error);
+                // })
+
+                // cara 4
+                // var kritikRef = db.collection("kritik").doc(element.id);
+                // kritikRef.update({
+                //     respon: responValue
+                // })
+                // .then(() => {
+                //     console.log("Respon berhasil disimpan");
+                //     input.style.display = 'none';
+                //     button.style.display = 'inline-block';
+                //     submitButton.style.display = 'none';
+                // })
+                // .catch((error) => {
+                //     console.error("Error menambahkan respon: ", error);
+                // });
+            }
